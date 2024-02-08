@@ -1,9 +1,10 @@
+name: CI/CD Pipeline for Staging
+
 on:
   push:
     branches:
       - staging
 
-name: Deploy to Staging
 jobs:
   sonarcloud-flask:
     runs-on: ubuntu-latest

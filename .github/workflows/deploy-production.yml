@@ -1,21 +1,60 @@
-name: Deploy to Production
+name: CI/CD Pipeline for Production
 
 on:
-  push:
+  pull_request:
     branches:
-      - main
+      - production
+    types: [opened, synchronize, reopened, closed]
 
 jobs:
-  deploy:
+  test:
+    if: github.event.pull_request.merged == false
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Build and Push Docker image
-      run: |
-        docker build -t martinleformal/ml-in-prod-project:latest .
-        docker push martinleformal/ml-in-prod-project:latest
-    - name: Deploy to Production Environment
-      run: |
-        docker pull martinleformal/ml-in-prod-project:latest
-        docker run -d -p 8080:80 --name ml-in-prod-project martinleformal/ml-in-prod-project:latest
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build Docker Compose Services
+        run: docker-compose build
+
+      - name: Run Tests
+        run: |
+          # Add commands to start your services and run tests
+          # For example: docker-compose up -d
+          #              run your test commands
+          #              docker-compose down
+
+  build-and-push:
+    if: github.event.pull_request.merged == true
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Log in to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build and Push Docker Images
+        run: |
+          docker-compose build
+          docker-compose push
+
+  deploy:
+    if: github.event.pull_request.merged == true
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Pull and Run Docker Images
+        run: |
+          docker-compose pull
+          docker-compose up -d

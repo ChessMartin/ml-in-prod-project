@@ -1,4 +1,4 @@
-name: Deploy to Developpement
+name: CI/CD Pipeline for Developpment
 
 on:
   push:
