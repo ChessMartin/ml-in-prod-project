@@ -38,5 +38,5 @@ jobs:
           from_branch: dev
           target_branch: staging
           message: Merge dev into staging - gitAction[BOT]
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GIT_TOKEN }}
 
