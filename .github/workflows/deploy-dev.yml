@@ -42,7 +42,7 @@ jobs:
       - name: Merge Dev into Staging
         run: |
           git fetch origin dev:dev
-          git merge --no-ff --allow-unrelated-histories dev
+          git merge --allow-unrelated-histories dev
 
       - name: Push to Staging
         uses: ad-m/github-push-action@master
