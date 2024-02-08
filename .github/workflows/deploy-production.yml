@@ -20,13 +20,6 @@ jobs:
       - name: Build Docker Compose Services
         run: docker-compose build
 
-      - name: Run Tests
-        run: |
-          # Add commands to start your services and run tests
-          # For example: docker-compose up -d
-          #              run your test commands
-          #              docker-compose down
-
   build-and-push:
     if: github.event.pull_request.merged == true
     needs: test
