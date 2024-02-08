@@ -41,7 +41,7 @@ jobs:
 
       - name: Merge Dev into Staging
         run: |
-          git fetch origin/dev
+          git fetch origin dev:dev
           git merge --allow-unrelated-histories dev
 
       - name: Push to Staging
