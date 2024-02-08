@@ -23,7 +23,7 @@ jobs:
       working-directory: ./flask-api-ml/model
       run: |
         # Replace with your test command
-        pytest test/test_data_transformation.py
+        pytest tests/*
 
   push-to-staging:
     needs: test
