@@ -34,7 +34,7 @@ def predict():
     region = request.form.get('region')
     if age & sex & bmi & children & smoker & region:
         params = PredictionParams(age, sex, bmi, children, smoker, region)
-        predictions.append(item)
+        predictions.append(params)
     return redirect(url_for('index'))
 
 

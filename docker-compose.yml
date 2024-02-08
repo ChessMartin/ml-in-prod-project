@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  flask-app:
+    build: ./flask-api-ml
+    volumes:
+      - ./flask-api-ml:/flask-api-ml
+    ports:
+      - "8080:8080"
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_RUN_HOST=0.0.0.0
+
+  zenml:
+    build: ./flask-api-ml/model
+    volumes:
+      - ./flask-api-ml/model:/model
+    ports:
+      - "8237:8237"
+    command: zenml up
