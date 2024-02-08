@@ -36,8 +36,8 @@ jobs:
       
       - name: Configure Git
         run: |
-          git config user.email "action@github.com"
-          git config user.name "GitHub Action"
+          git config user.email "azertyben2000@orange.fr"
+          git config user.name "ActionBot"
 
       - name: Merge Dev into Staging
         run: |
