@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Test App</title>
+		<link
+			rel="stylesheet"
+			href="{{ url_for('static', filename='style.css') }}"
+		/>
+	</head>
+	<body>
+		<div class="container">
+			<h2>Items</h2>
+			<form method="POST" action="/add">
+				<input type="text" name="age" placeholder="Add age" />
+				<input type="text" name="sex" placeholder="Add sex" />
+				<input type="text" name="bmi" placeholder="Add bmi" />
+				<input type="text" name="children" placeholder="Add children" />
+				<input type="text" name="smoker" placeholder="Add smoker" />
+				<input type="text" name="region" placeholder="Add region" />
+				<button type="submit">Predict</button>
+			</form>
+			<ul>
+				{% for item in items %}
+				<li>
+					{{ item }}
+					<a href="/delete/{{ loop.index0 }}">Delete</a>
+					<form method="POST" action="/update/{{ loop.index0 }}">
+						<input type="text" name="new_item" placeholder="New item" />
+						<button type="submit">Update</button>
+					</form>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</body>
+</html>
