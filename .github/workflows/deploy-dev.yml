@@ -4,15 +4,10 @@ on:
   push:
     branches:
       - dev
-  pull_request:
-    branches:
-      - staging
-      - main
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python
@@ -29,4 +24,24 @@ jobs:
       run: |
         # Replace with your test command
         pytest test/test_data_transformation.py
+
+  push-to-staging:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: staging
+
+      - name: Pull Request Branch Merge
+        run: |
+          git fetch origin ${{ github.head_ref }}
+          git merge --no-ff origin/${{ github.head_ref }}
+
+      - name: Push to Staging
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: staging
 

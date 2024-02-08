@@ -56,7 +56,16 @@ jobs:
         with:
           fetch-depth: 0
           ref: staging
-      - name: Create Pull Request
+
+      - name: Check for Existing Pull Request
+        id: check-pr
+        run: |
+          PR_EXISTS=$(curl -H "Authorization: token $GITHUB_TOKEN" \
+          "https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls?state=open&head=${GITHUB_REPOSITORY_OWNER}:staging&base=main" | jq '. | length > 0')
+          echo "PR_EXISTS=${PR_EXISTS}" >> $GITHUB_ENV
+
+      - name: Create Pull Request if Not Exists
+        if: env.PR_EXISTS == 'false'
         uses: peter-evans/create-pull-request@v4
         with:
           commit-message: "Merge staging into main"
@@ -68,3 +77,4 @@ jobs:
             automated pr
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
