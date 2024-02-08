@@ -1,1 +1,10 @@
 flask
+pandas 
+zenml
+pickle5
+matplotlib
+seaborn
+watchdog
+scikit-learn
+pytest
+pytest-cov
