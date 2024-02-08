@@ -1,24 +1,32 @@
-name: Deploy to Staging
+name: Deploy to Developpement
 
 on:
   push:
     branches:
       - dev
+  pull_request:
+    branches:
+      - staging
+      - main
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build and Push Docker image
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9.18'
+    - name: Install dependencies
+      working-directory: ./flask-api-ml/model
       run: |
-        # Add commands to build and push your Docker image to a registry
-        # For example, using Docker Hub
-        docker build -t martinleformal/ml-in-prod-project:staging .
-        docker push martinleformal/ml-in-prod-project:staging
-    - name: Deploy to Staging Environment
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Run tests
+      working-directory: ./flask-api-ml/model
       run: |
-        docker pull martinleformal/ml-in-prod-project:staging
-        docker run -d -p 8080:80 --name ml-in-prod-project martinleformal/ml-in-prod-project:staging
+        # Replace with your test command
+        pytest test/test_data_transformation.py
 

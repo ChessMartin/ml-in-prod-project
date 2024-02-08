@@ -28,13 +28,10 @@ class DataPreProcessStrategy(DataStrategy):
             # Encoding 'sex' and 'smoker' columns
             data['sex'] = encoder.fit_transform(data['sex'])
             data['smoker'] = encoder.fit_transform(data['smoker'])
-            
-            # One hot encoding for 'region' column
-            data = pd.get_dummies(data, columns=['region'], prefix='region')
 
             # Dropping less correlated columns based on the correlation matrix
             data = data.drop(
-                ['region_southeast', 'region_southwest', 'region_northeast', 'region_northwest', 'children', 'sex'],
+                ['region', 'children', 'sex'],
                 axis=1
             )
 

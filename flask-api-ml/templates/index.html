@@ -12,8 +12,13 @@
 		<div class="container">
 			<h2>Items</h2>
 			<form method="POST" action="/add">
-				<input type="text" name="item" placeholder="Add new item" />
-				<button type="submit">Add</button>
+				<input type="text" name="age" placeholder="Add age" />
+				<input type="text" name="sex" placeholder="Add sex" />
+				<input type="text" name="bmi" placeholder="Add bmi" />
+				<input type="text" name="children" placeholder="Add children" />
+				<input type="text" name="smoker" placeholder="Add smoker" />
+				<input type="text" name="region" placeholder="Add region" />
+				<button type="submit">Predict</button>
 			</form>
 			<ul>
 				{% for item in items %}

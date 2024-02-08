@@ -13,3 +13,7 @@ class ModelEvaluation:
         predictions = model.predict(X_test)
         r2 = r2_score(y_test, predictions)
         return r2  
+    
+    @staticmethod
+    def predict_model(model, X_test):
+        return model.predict(X_test)

@@ -5,3 +5,4 @@ matplotlib
 seaborn
 watchdog
 scikit-learn
+pytest
