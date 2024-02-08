@@ -23,30 +23,20 @@ jobs:
       working-directory: ./flask-api-ml/model
       run: |
         # Replace with your test command
-        pytest test/test_data_transformation.py
+        pytest tests/*
 
   push-to-staging:
     #needs: test
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          ref: staging
-      
-      - name: Configure Git
-        run: |
-          git config user.email "action@github.com"
-          git config user.name "GitHub Action"
+      - uses: actions/checkout@master
 
-      - name: Merge Dev into Staging
-        run: |
-          git fetch origin dev:dev
-          git merge --allow-unrelated-histories dev
-
-      - name: Push to Staging
-        uses: ad-m/github-push-action@master
+      - name: Merge dev -> staging
+        uses: devmasx/merge-branch@master
         with:
-          github_token: ${{ secrets.GIT_TOKEN }}
-          branch: staging
+          type: now
+          from_branch: dev
+          target_branch: staging
+          message: Merge dev into staging - gitAction[BOT]
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
