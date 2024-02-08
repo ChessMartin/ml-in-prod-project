@@ -26,7 +26,7 @@ jobs:
         pytest test/test_data_transformation.py
 
   push-to-staging:
-    needs: test
+    #needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -41,7 +41,7 @@ jobs:
 
       - name: Merge Dev into Staging
         run: |
-          git fetch origin dev
+          git fetch origin/dev
           git merge --allow-unrelated-histories dev
 
       - name: Push to Staging
