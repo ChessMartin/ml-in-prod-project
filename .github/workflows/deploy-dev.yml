@@ -34,10 +34,10 @@ jobs:
         with:
           ref: staging
 
-      - name: Pull Request Branch Merge
+      - name: Merge Dev into Staging
         run: |
-          git fetch origin ${{ github.head_ref }}
-          git merge --no-ff origin/${{ github.head_ref }}
+          git fetch origin dev:dev
+          git merge --no-ff dev
 
       - name: Push to Staging
         uses: ad-m/github-push-action@master
