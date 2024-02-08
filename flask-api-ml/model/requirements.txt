@@ -6,3 +6,4 @@ seaborn
 watchdog
 scikit-learn
 pytest
+pytest-cov
