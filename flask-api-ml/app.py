@@ -3,39 +3,33 @@ import pandas as pd
 
 app = Flask(__name__)
 
-# Take list of args in params
-@app.route('/predict', methods=['GET'])
+
+@app.route('/predict', methods=['POST'])
 def predict():
-    try:
-        params = {
-            "age": request.args.get('age'),
-            "sex": request.args.get('sex'),
-            "bmi": request.args.get('bmi'),
-            "children": request.args.get('children'),
-            "smoker": request.args.get('smoker'),
-            "region": request.args.get('region')
-        }
+    if request.method == 'POST':
+        data = request.json
+        features = pd.DataFrame([data])
+        # Placeholder for prediction logic
+        prediction = make_prediction(model, features)
+        return jsonify({'prediction': str(prediction)})
 
-        # prediction = subprocess(....) (pipe)
-        
-        return params, 200
-    except Exception as e:
-        raise f"[ERROR] predict request: {e}"
+# Take json object in params
 
-# Take json object in params  
+
 @app.route('/retrain', methods=['POST'])
 def retrain():
     try:
         data = request.json
         df = pd.DataFrame(data)
 
-        #jsons = df.to_json(index=False) ... to convert data in json
+        # jsons = df.to_json(index=False) ... to convert data in json
 
-        #new_score = .... (pipe)
-        
+        # new_score = .... (pipe)
+
         return jsons, 200
     except Exception as e:
         raise f"[ERROR] retrain request: {e}"
-    
+
+
 if __name__ == '__main__':
     app.run(debug=True)
