@@ -3,7 +3,7 @@ name: CI/CD Pipeline for Production
 on:
   pull_request:
     branches:
-      - production
+      - main
     types: [opened, synchronize, reopened, closed]
 
 jobs:

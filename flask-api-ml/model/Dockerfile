@@ -17,4 +17,4 @@ EXPOSE 8237
 ENV NAME ZenML
 
 # Run app.py when the container launches
-CMD zenml init && zenml up
+CMD zenml init
