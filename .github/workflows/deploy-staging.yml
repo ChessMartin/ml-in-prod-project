@@ -55,7 +55,6 @@ jobs:
           echo "PR_EXISTS=${PR_EXISTS}" >> $GITHUB_ENV
 
       - name: Create Pull Request if Not Exists
-        if: env.PR_EXISTS == 'false'
         uses: peter-evans/create-pull-request@v4
         with:
           commit-message: "Merge staging into main"
