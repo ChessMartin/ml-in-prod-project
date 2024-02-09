@@ -1,10 +1,13 @@
 name: CI/CD Pipeline for Production
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
-    types: [opened, synchronize, reopened, closed]
+    types: [opened]
 
 jobs:
   test:
@@ -21,7 +24,7 @@ jobs:
         run: docker-compose build
 
   build-and-push:
-    if: github.event.pull_request.merged == true
+    if: ${{ github.event_name == 'push' }}
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -40,7 +43,7 @@ jobs:
           docker-compose push
 
   deploy:
-    if: github.event.pull_request.merged == true
+    if: ${{ github.event_name == 'push' }}
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
