@@ -24,6 +24,12 @@ if st.button("Predict"):
         'smoker': smoker,
         'region': region
     }
-    response = requests.post(url, json=data)
-    prediction = response.json()['prediction']
-    st.write(f"Prediction: {prediction}")
+    try:
+        response = requests.post(url, json=data)
+        if response.status_code == 200:
+            prediction = response.json()['prediction']
+            st.write(f"Prediction: {prediction}") 
+        else: 
+            raise Exception(f" {response} - Code: {response.status_code}")
+    except Exception as e:
+        st.error(f"Bad request: {e}")
